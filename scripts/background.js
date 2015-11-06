@@ -27,8 +27,8 @@ var stats;
 function setListeners() {
 	chrome.runtime.onMessage.addListener(function(msg) {
 
-		if (msg.tabs) {
-			stats.tabs ++;
+		if (msg.pages) {
+			stats.pages += msg.pages;
 		}
 
 		if (msg.path) {
@@ -43,10 +43,11 @@ function setListeners() {
 			for(var i = 0, k; i < msg.keys.length; i++) {
 				k = msg.keys[i];
 				
-				if (!stats.keys[KEYS[k]]) {
-					stats.keys[KEYS[k]] = 0;
+				if (!stats.pressed.keys[KEYS[k]]) {
+					stats.pressed.keys[KEYS[k]] = 0;
 				}
-				stats.keys[KEYS[k]] ++;
+				stats.pressed.keys[KEYS[k]] ++;
+				stats.pressed.length ++;
 			}
 		}
 
@@ -80,9 +81,12 @@ function getAchivment(achivment) {
 }
 
 chrome.storage.local.get({
-		tabs: 0,
+		pages: 0,
 		path: 0,
-		keys: {},
+		pressed: {
+			length: 0,
+			keys: {}
+		},
 		clicks: 0,
 		achivments: []
 	}, init);

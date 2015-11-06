@@ -1,18 +1,14 @@
 (function(){
-	var stats = {
-		path: 0,
-		keys: [],
-		clicks: 0
-	}
+	var stats = resetStats();
 
-	chrome.runtime.sendMessage(null, {tabs: 1});
+	chrome.runtime.sendMessage(null, {pages: 1});
 
 	document.body.addEventListener('mousemove', function(e) {
 		stats.path += Math.sqrt(e.movementX * e.movementX + e.movementY * e.movementY);
 	});
 
 	document.body.addEventListener('keyup', function(e) {
-		stats.keys.push(e.keyCode);		
+		stats.keys.push(e.keyCode);
 	});
 
 	document.body.addEventListener('click', function(e) {
@@ -20,9 +16,16 @@
 	});
 
 	setInterval(function() {
-		chrome.runtime.sendMessage(null, stats); 
-		stats.path = 0;
-		stats.keys = [];
-		stats.clicks = 0;
-	}, 20000)
+		chrome.runtime.sendMessage(null, stats);
+
+		stats = resetStats();
+	}, 20000);
+
+	function resetStats() {
+		return {
+			path: 0,
+			keys: [],
+			clicks: 0
+		};
+	}
 })();
