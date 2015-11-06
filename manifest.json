@@ -1,0 +1,33 @@
+{
+  "name": "Webchivments",
+  "version": "0.0.1",
+  "manifest_version": 2,
+
+  "background": {
+    "scripts": ["scripts/achivments.js", "scripts/background.js"]
+  },
+
+  "description": "Стань самым крутым в нэте",
+  "icons": {
+    "16" : "images/icon-16.png",
+    "48" : "images/icon-48.png",
+    "128" : "images/icon-128.png"
+  },
+
+   "browser_action": {
+    "default_icon": "images/icon-16.png",
+    "default_title": "Проверь свои достижения",
+    "default_popup": "popup.html"
+  },
+
+  "permissions": [
+    "tabs", "storage", "notifications", "http://*/*", "https://*/*"
+  ],
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["scripts/webchivments.js"]
+    }
+  ]
+}
