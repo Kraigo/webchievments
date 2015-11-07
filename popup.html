@@ -8,7 +8,7 @@
 <body>
 	<div id="dpi"></div>
 	<div class="content">
-		<ul>
+<!-- 		<ul>
 			<li>
 				Количество открытых сайтов: <span id="pages"></span>
 			</li>
@@ -21,10 +21,26 @@
 			<li>
 				Нажато кнопок: <span id="keys"></span>
 			</li>
-		</ul>
-	</div>
-	
+		</ul> -->
 
+		<p>Получено достижений: <span id="achivmentFiredCount"></span> из <span id="achivmentAllCount"></span></p>
+
+		<ul id="achivments-list" class="achivments-list"></ul>
+	</div>
+
+	<script type="text/html" id="achivment-tmp">
+		<li class="achivment {{fire}}">
+			<div class="achivment-image" style="background-image: url(images/{{icon}})"></div>
+			<h5 class="achivment-title">{{title}}</h5>
+			<p class="achivment-description">{{description}}</p>
+			<div class="achivment-progress">
+				<span class="achivment-progress-bar" style="width: {{progress}}%"></span>
+				<span class="achivment-progress-value"> {{current}} / {{target}}</span>
+			</div>
+		</li>
+	</script>
+	
+	<script src="scripts/achivments.js"></script>
 	<script src="scripts/popup.js"></script>
 </body>
 </html>

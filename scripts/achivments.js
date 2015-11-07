@@ -1,47 +1,61 @@
-var achivments = [
-	{
-		id: '1',
-		icon: '',
-		title: '1,000,000 пикселей в интернете',
-		description: 'Описание',
-		triggered: function(stats) {
-			return stats.path >= 1000000;
-		}
+function getAchivments(stats) {
+	return [
+		new Achivment(stats, {
+			id: 1,
+			title: 'Твои первые шаги',
+			description: 'Пройти путь в 1,000,000 пикселей',
+			relation: 'path',
+			target: 1000000
+		}),
+		new Achivment(stats, {
+			id: 2,
+			title: 'От Земли до Луны',
+			description: '1,000,000,000,000 пикселей в интернете, <br> я даже цифру такую не знаю',
+			relation: 'path',
+			target: 1000000000000
+		}),
+		new Achivment(stats, {
+			id: 3,
+			title: 'Освоить клавиатуру',
+			description: 'Нажать 1,000 кнопок',
+			relation: 'presses',
+			target: 1000
+		}),
+		new Achivment(stats, {
+			id: 4,
+			title: 'Расширить кругозор',
+			description: 'Открыть 100 новых вкладок',
+			relation: 'pages',
+			target: 100
+		})
+	]
+};
+
+
+function Achivment(stats, options, trigger) {
+	this.stats = stats;
+	this.id = options.id || 0;
+	this.icon = options.icon || 'icon-48.png';
+	this.title = options.title || 'Достижение';
+	this.description = options.description || 'Описание';
+	this.target = options.target || 0;
+	this.relation = options.relation;
+
+	if (trigger) this.trigger = trigger;
+}
+
+Achivment.prototype = {
+	current: function() {
+		return this.stats[this.relation];
 	},
-	{
-		id: '2',
-		icon: '',
-		title: '1,000,000,000 пикселей в интернете',
-		description: 'Описание',
-		triggered: function(stats) {
-			return stats.path >= 1000000000;
-		}
+	trigger: function () {
+		return this.current() >= this.target;
 	},
-	{
-		id: '3',
-		icon: '',
-		title: '1,000,000,000,000 пикселей в интернете',
-		description: 'Описание',
-		triggered: function(stats) {
-			return stats.path >= 1000000000000;
-		}
+	progress: function() {
+		var progress = this.current() / this.target * 100;
+		return progress < 100 ? progress : 100;
 	},
-	{
-		id: '4',
-		icon: '',
-		title: 'Оснвоить клавиатуру',
-		description: 'Нажать 1,000 кнопок',
-		triggered: function(stats) {
-			return stats.pressed.length >= 10000;
-		}
-	},
-	{
-		id: '5',
-		icon: '',
-		title: 'Расширить кругозор',
-		description: 'Открыть 1,000 новых вкладок',
-		triggered: function(stats) {
-			return stats.pages >= 10000;
-		}
+	isFired: function() {
+		return this.stats.achivmentsFired.indexOf(this.id) >= 0;
 	}
-];
+}

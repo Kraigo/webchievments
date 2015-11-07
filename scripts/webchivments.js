@@ -19,7 +19,7 @@
 		chrome.runtime.sendMessage(null, stats);
 
 		stats = resetStats();
-	}, 20000);
+	}, 10000);
 
 	function resetStats() {
 		return {

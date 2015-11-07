@@ -23,6 +23,7 @@ var KEYS = {
 	'189': 'MINUS',		'187': 'PLUS'
 }
 var stats;
+var achivments;
 
 function setListeners() {
 	chrome.runtime.onMessage.addListener(function(msg) {
@@ -42,12 +43,12 @@ function setListeners() {
 		if (msg.keys) {
 			for(var i = 0, k; i < msg.keys.length; i++) {
 				k = msg.keys[i];
-				
-				if (!stats.pressed.keys[KEYS[k]]) {
-					stats.pressed.keys[KEYS[k]] = 0;
+
+				if (!stats.keys[KEYS[k]]) {
+					stats.keys[KEYS[k]] = 0;
 				}
-				stats.pressed.keys[KEYS[k]] ++;
-				stats.pressed.length ++;
+				stats.keys[KEYS[k]] ++;
+				stats.presses ++;
 			}
 		}
 
@@ -61,33 +62,39 @@ function saveStats() {
 
 function init(chromeStats) {
 	stats = chromeStats;
+	achivments = getAchivments(stats);
 	setListeners();
-	setInterval(saveStats, 20000)
+	setInterval(saveStats, 10000)
 }
 
 function checkAchivments() {
 	for(var i=0, achivment; i<achivments.length; i++) {
 		achivment = achivments[i];
-		if (stats.achivments.indexOf(achivment.id) < 0 && achivment.triggered(stats)) {
-			getAchivment(achivment);
+		if (!achivment.isFired() && achivment.trigger()) {
+			fireAchivment(achivment);
 		}
 	}
 }
 
 
-function getAchivment(achivment) {
-	stats.achivments.push(achivment.id);
-	chrome.notifications.create(null, {type:'basic', title: 'New achivment!', message: achivment.title, contextMessage: achivment.description, iconUrl: 'images/icon-128.png'});
+function fireAchivment(achivment) {
+	console.log('Fire achivment', achivment.title);
+	stats.achivmentsFired.push(achivment.id);
+	stats.achivmentsRecent.push(achivment.id);
+	var badge = stats.achivmentsRecent.length;
+	chrome.browserAction.setBadgeText({text: badge > 0 ? badge.toString() : ''})
+	chrome.notifications.create(null, {type:'basic', title: 'New achivment!', message: achivment.title, contextMessage: achivment.description, iconUrl: 'images/'+achivment.icon});
 }
 
+
+chrome.storage.local.clear(function() {
 chrome.storage.local.get({
 		pages: 0,
 		path: 0,
-		pressed: {
-			length: 0,
-			keys: {}
-		},
+		presses: 0,
 		clicks: 0,
-		achivments: []
+		keys: {},
+		achivmentsFired: [],
+		achivmentsRecent: []
 	}, init);
-
+});
