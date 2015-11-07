@@ -57,5 +57,8 @@ Achivment.prototype = {
 	},
 	isFired: function() {
 		return this.stats.achivmentsFired.indexOf(this.id) >= 0;
+	},
+	isRecent: function() {
+		return this.stats.achivmentsRecent.indexOf(this.id) >=0;
 	}
 }

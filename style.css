@@ -127,3 +127,8 @@ ul li:not(:last-child) {
 	background: linear-gradient(135deg, #aaa 0%, #aaa 30%, #fff 30%, #fff 50%, #aaa 50%, #aaa 80%, #fff 80%, #fff 100%);
 	background-size: 10px 10px;
 }
+
+.achivment.recent {
+	border-color: #D6AF13;
+	box-shadow: 0 0 10px #D6AF13;
+}

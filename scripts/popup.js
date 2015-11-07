@@ -3,11 +3,23 @@ function init(stats) {
 	document.getElementById('achivmentFiredCount').innerHTML = stats.achivmentsFired.length;
 	document.getElementById('achivmentAllCount').innerHTML = achivments.length;
 
+	chrome.browserAction.setBadgeText({text: ''});
+	setTimeout(function() {
+		chrome.storage.local.set({achivmentsRecent: []});
+	},2000)
+
 	var listPattern = document.getElementById('achivment-tmp').innerHTML;
+
+	achivments.sort(function(a,b) {
+		var fire = 0;
+		a.isFired() ? fire -- : '';
+		b.isFired() ? fire ++ : '';
+		return fire;
+	});
+
 	var patternResult = '';
 
 	achivments.forEach(function(achivment) {
-		console.log(achivment);
 		patternData = {
 			title: achivment.title,
 			description: achivment.description,
@@ -15,7 +27,8 @@ function init(stats) {
 			target: achivment.target,
 			current: achivment.current().toFixed(),
 			progress: achivment.progress(),
-			fire: achivment.isFired()? 'fired' : ''
+			fire: achivment.isFired()? 'fired' : '',
+			recent: achivment.isRecent()? 'recent' : '',
 		};
 		patternResult += fillPattern(listPattern, patternData);
 	});
