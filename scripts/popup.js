@@ -1,7 +1,9 @@
+"use strict";
 function init(stats) {
 	var achivments = getAchivments(stats);
 	document.getElementById('achivmentFiredCount').innerHTML = stats.achivmentsFired.length;
 	document.getElementById('achivmentAllCount').innerHTML = achivments.length;
+	console.log(stats);
 
 	chrome.browserAction.setBadgeText({text: ''});
 	setTimeout(function() {
@@ -20,7 +22,7 @@ function init(stats) {
 	var patternResult = '';
 
 	achivments.forEach(function(achivment) {
-		patternData = {
+		var patternData = {
 			title: achivment.title,
 			description: achivment.description,
 			icon: achivment.icon,
@@ -53,26 +55,12 @@ chrome.storage.local.get({
 		achivmentsRecent: []
 	}, init);
 
-function fillPattern(pattern, data, parent) {
-	parent = parent ? parent + '.' : '';
+function fillPattern(pattern, data) {
 	for(var key in data) {
 		var dataItem = data[key];
-		if (Array.isArray(dataItem)) {
-			var reg = new RegExp('{{'+parent+key+':}}([\\s\\S]*){{:'+parent+key+'}}');
-			var template = pattern.match(reg)[1];
-			var loopResult = '';
-			for (var item in dataItem) {
-				var loopData = dataItem[item];
-				loopResult += fillPattern(template, loopData, parent+key);        
-			}
-			pattern = pattern.replace(reg, loopResult);
-		} else {
-			var reg = RegExp('{{'+parent+key+'}}', 'g');
-			pattern = pattern.replace(reg, dataItem);
-		}
+		var reg = RegExp('{{'+key+'}}', 'g');
+		pattern = pattern.replace(reg, dataItem);
 	}
-	pattern = pattern.replace(/{{.*?:}}[\s\S]*?{{:.*?}}/g, '');
 	pattern = pattern.replace(/{{.*?}}/g, '');
-
 	return pattern;
 };
