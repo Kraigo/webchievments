@@ -1,4 +1,3 @@
-"use strict";
 function getAchivments(stats) {
 	return [
 		new Achivment(stats, {
@@ -28,25 +27,35 @@ function getAchivments(stats) {
 			description: 'Открыть 100 новых вкладок',
 			relation: 'pages',
 			target: 100
+		}),
+		new Achivment(stats, {
+			id: 5,
+			title: 'Полезная прогулка',
+			description: 'Пройти 5,000 метров (96dpi)',
+			relation: 'path',
+			target: 5000,
+		}, function() {
+			return this.stats.path / (96 / 0.0254);
 		})
 	]
 };
 
 
-function Achivment(stats, options, trigger) {
-	this.stats = stats;
+function Achivment(stats, options, calculate) {
+	this.stats = stats;	
+	this.calculate = calculate;
+
 	this.id = options.id || 0;
 	this.icon = options.icon || 'icon-48.png';
 	this.title = options.title || 'Достижение';
 	this.description = options.description || 'Описание';
 	this.target = options.target || 0;
 	this.relation = options.relation;
-
-	if (trigger) this.trigger = trigger;
 }
 
 Achivment.prototype = {
 	current: function() {
+		if (this.calculate) return this.calculate();
 		return this.stats[this.relation];
 	},
 	trigger: function () {
