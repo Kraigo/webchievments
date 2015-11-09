@@ -23,24 +23,24 @@
 			</li>
 		</ul> -->
 
-		<p>Получено достижений: <span id="achivmentFiredCount"></span> из <span id="achivmentAllCount"></span></p>
+		<p>Получено достижений: <span id="achievmentFiredCount"></span> из <span id="achievmentAllCount"></span></p>
 
-		<ul id="achivments-list" class="achivments-list"></ul>
+		<ul id="achievments-list" class="achievments-list"></ul>
 	</div>
 
-	<script type="text/html" id="achivment-tmp">
-		<li class="achivment {{fire}}">
-			<div class="achivment-image" style="background-image: url(images/{{icon}})"></div>
-			<h5 class="achivment-title">{{title}}</h5>
-			<p class="achivment-description">{{description}}</p>
-			<div class="achivment-progress">
-				<span class="achivment-progress-bar" style="width: {{progress}}%"></span>
-				<span class="achivment-progress-value"> {{current}} / {{target}}</span>
+	<script type="text/html" id="achievment-tmp">
+		<li class="achievment {{fire}} {{recent}}">
+			<div class="achievment-image" style="background-image: url(images/{{icon}})"></div>
+			<h5 class="achievment-title">{{title}}</h5>
+			<p class="achievment-description">{{description}}</p>
+			<div class="achievment-progress">
+				<span class="achievment-progress-bar" style="width: {{progress}}%"></span>
+				<span class="achievment-progress-value"> {{current}} / {{target}}</span>
 			</div>
 		</li>
 	</script>
 	
-	<script src="scripts/achivments.js"></script>
+	<script src="scripts/achievments.js"></script>
 	<script src="scripts/popup.js"></script>
 </body>
 </html>

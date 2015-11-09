@@ -23,7 +23,7 @@ var KEYS = {
 	'189': 'MINUS',		'187': 'PLUS'
 }
 var stats;
-var achivments;
+var achievments;
 
 function setListeners() {
 	chrome.runtime.onMessage.addListener(function(msg) {
@@ -52,38 +52,45 @@ function setListeners() {
 			}
 		}
 
+		if (msg.openPopup) {
+			stats.achievmentsRecent = stats.achievmentsRecent.filter(function(item){
+				return msg.openPopup.indexOf(item) < 0;
+			});
+			chrome.browserAction.setBadgeText({text: ''})
+		}
+
 	});
 }
 
 function saveStats() {
-	checkAchivments();
+	checkAchievments();
 	chrome.storage.local.set(stats);
 }
 
 function init(chromeStats) {
 	stats = chromeStats;
-	achivments = getAchivments(stats);
+	achievments = getAchievments(stats);
 	setListeners();
 	setInterval(saveStats, 10000)
 }
 
-function checkAchivments() {
-	for(var i=0, achivment; i<achivments.length; i++) {
-		achivment = achivments[i];
-		if (!achivment.isFired() && achivment.trigger()) {
-			fireAchivment(achivment);
+function checkAchievments() {
+	for(var i=0, achievment; i<achievments.length; i++) {
+		achievment = achievments[i];
+		if (!achievment.isFired() && achievment.trigger()) {
+			fireAchievment(achievment);
 		}
 	}
 }
 
 
-function fireAchivment(achivment) {
-	console.log('Fire achivment', achivment.title);
-	stats.achivmentsFired.push(achivment.id);
-	stats.achivmentsRecent.push(achivment.id);
-	var badge = stats.achivmentsRecent.length;
+function fireAchievment(achievment) {
+	console.log('Fire achievment', achievment.title);
+	stats.achievmentsFired.push(achievment.id);
+	stats.achievmentsRecent.push(achievment.id);
+	var badge = stats.achievmentsRecent.length;
 	chrome.browserAction.setBadgeText({text: badge > 0 ? badge.toString() : ''})
-	chrome.notifications.create(null, {type:'basic', title: 'New achivment!', message: achivment.title, contextMessage: achivment.description, iconUrl: 'images/'+achivment.icon});
+	chrome.notifications.create(null, {type:'basic', title: 'New achievment!', message: achievment.title, contextMessage: achievment.description, iconUrl: 'images/'+achievment.icon});
 }
 
 
@@ -94,7 +101,7 @@ chrome.storage.local.get({
 		presses: 0,
 		clicks: 0,
 		keys: {},
-		achivmentsFired: [],
-		achivmentsRecent: []
+		achievmentsFired: [],
+		achievmentsRecent: []
 	}, init);
 });

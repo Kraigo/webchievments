@@ -1,40 +1,39 @@
 "use strict";
 function init(stats) {
-	var achivments = getAchivments(stats);
-	document.getElementById('achivmentFiredCount').innerHTML = stats.achivmentsFired.length;
-	document.getElementById('achivmentAllCount').innerHTML = achivments.length;
-	console.log(stats);
+	var achievments = getAchievments(stats);
+	document.getElementById('achievmentFiredCount').innerHTML = stats.achievmentsFired.length;
+	document.getElementById('achievmentAllCount').innerHTML = achievments.length;
 
-	chrome.browserAction.setBadgeText({text: ''});
-	setTimeout(function() {
-		chrome.storage.local.set({achivmentsRecent: []});
-	},2000)
+	chrome.runtime.sendMessage(null, {openPopup: stats.achievmentsRecent});
 
-	var listPattern = document.getElementById('achivment-tmp').innerHTML;
+	var listPattern = document.getElementById('achievment-tmp').innerHTML;
 
-	achivments.sort(function(a,b) {
+	achievments.sort(function(a,b) {
 		var fire = 0;
 		a.isFired() ? fire -- : '';
 		b.isFired() ? fire ++ : '';
+		a.isRecent() ? fire -- : '';
+		b.isRecent() ? fire ++ : '';
 		return fire;
 	});
 
 	var patternResult = '';
 
-	achivments.forEach(function(achivment) {
+	achievments.forEach(function(achievment) {
+		console.log(achievment);
 		var patternData = {
-			title: achivment.title,
-			description: achivment.description,
-			icon: achivment.icon,
-			target: achivment.target,
-			current: achivment.current().toFixed(),
-			progress: achivment.progress(),
-			fire: achivment.isFired()? 'fired' : '',
-			recent: achivment.isRecent()? 'recent' : '',
+			title: achievment.title,
+			description: achievment.description,
+			icon: achievment.icon,
+			target: achievment.target,
+			current: achievment.isFired() ? achievment.target : achievment.current().toFixed(),
+			progress: achievment.progress(),
+			fire: achievment.isFired()? 'fired' : '',
+			recent: achievment.isRecent()? 'recent' : '',
 		};
 		patternResult += fillPattern(listPattern, patternData);
 	});
-	document.getElementById('achivments-list').innerHTML = patternResult;
+	document.getElementById('achievments-list').innerHTML = patternResult;
 }
 
 function pxToKm(px) {
@@ -51,8 +50,8 @@ chrome.storage.local.get({
 		presses: 0,
 		clicks: 0,
 		keys: {},
-		achivmentsFired: [],
-		achivmentsRecent: []
+		achievmentsFired: [],
+		achievmentsRecent: []
 	}, init);
 
 function fillPattern(pattern, data) {
