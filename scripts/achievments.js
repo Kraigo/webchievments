@@ -25,22 +25,14 @@ function getAchievments(stats) {
 			description: 'Пройти путь в 1,000,000 пикселей',
 			relation: 'path',
 			target: 1000000
-		}),		
-		new Achievment(stats, {
-			id: 3,
-			material: 'gold',
-			title: 'Поездка удалась',
-			description: '1,000,000,000 пикселей в интернете',
-			relation: 'path',
-			target: 1000000000
 		}),
 		new Achievment(stats, {
 			id: 4,
 			material: 'gold',
 			title: 'От Земли до Луны',
-			description: '1,000,000,000,000 пикселей в интернете, <br> я даже цифру такую не знаю',
+			description: '384,467 километров (145,300,715,840 пкс при 96 ppi)',
 			relation: 'path',
-			target: 1000000000000
+			target: 145300715840
 		}),
 		new Achievment(stats, {
 			id: 5,
@@ -62,11 +54,11 @@ function getAchievments(stats) {
 			id: 7,
 			material: 'gold',
 			title: 'Полезная прогулка',
-			description: 'Пройти 5,000 метров (96dpi)',
+			description: 'Пройти 3,000 метров (96dpi)',
 			relation: function() {
 				return stats.path / (96 / 0.0254);
 			},
-			target: 5000,
+			target: 3000,
 		}),
 		new Achievment(stats, {
 			id: 7,
