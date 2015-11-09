@@ -1,3 +1,4 @@
+'use strict';
 function getAchievments(stats) {
 	var achievments = [
 		new Achievment(stats, {
@@ -14,7 +15,7 @@ function getAchievments(stats) {
 			title: 'Сразу в бой',
 			description: 'Получить больше одного достижения',
 			relation: function() {
-				return stats.achievmentsFired.length;
+				return this.stats.achievmentsFired.length;
 			},
 			target: 2
 		}),
@@ -56,7 +57,7 @@ function getAchievments(stats) {
 			title: 'Полезная прогулка',
 			description: 'Пройти 3,000 метров (96dpi)',
 			relation: function() {
-				return stats.path / (96 / 0.0254);
+				return this.stats.path / (96 / 0.0254);
 			},
 			target: 3000,
 		}),
@@ -66,7 +67,7 @@ function getAchievments(stats) {
 			title: 'Властелин достижений',
 			description: 'Собрать ВСЕ достижения',
 			relation: function() {
-				return stats.achievmentsFired.length;
+				return this.stats.achievmentsFired.length;
 			},
 			target: function() {
 				return achievments.length;
@@ -95,10 +96,10 @@ function Achievment(stats, options, trigger) {
 
 Achievment.prototype = {
 	current: function() {
-		return (typeof this.relation == 'function') ? this.relation() : this.stats[this.relation];
+		return (typeof this.relation == 'function') ? this.relation.apply(this) : this.stats[this.relation];
 	},
 	done: function() {
-		return (typeof this.target == 'function') ? this.target() : this.target;
+		return (typeof this.target == 'function') ? this.target.apply(this) : this.target;
 	},
 	trigger: function () {
 		return this.current() >= this.done();

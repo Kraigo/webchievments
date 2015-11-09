@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 function init(stats) {
 	var achievments = getAchievments(stats);
 	document.getElementById('achievmentFiredCount').innerHTML = stats.achievmentsFired.length;
@@ -20,7 +20,6 @@ function init(stats) {
 	var patternResult = '';
 
 	achievments.forEach(function(achievment) {
-		console.log(achievment);
 		var patternData = {
 			title: achievment.title,
 			description: achievment.description,

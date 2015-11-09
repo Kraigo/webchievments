@@ -90,7 +90,7 @@ function fireAchievment(achievment) {
 	stats.achievmentsRecent.push(achievment.id);
 	var badge = stats.achievmentsRecent.length;
 	chrome.browserAction.setBadgeText({text: badge > 0 ? badge.toString() : ''})
-	chrome.notifications.create(null, {type:'basic', title: 'New achievment!', message: achievment.title, contextMessage: achievment.description, iconUrl: 'images/'+achievment.icon});
+	chrome.notifications.create(null, {type:'basic', title: 'Новое достижение!', message: achievment.title, contextMessage: achievment.description, iconUrl: 'images/'+achievment.icon});
 }
 
 
