@@ -62,7 +62,7 @@ function getAchievments(stats) {
 			target: 3000,
 		}),
 		new Achievment(stats, {
-			id: 7,
+			id: 9999,
 			material: 'gold',
 			title: 'Властелин достижений',
 			description: 'Собрать ВСЕ достижения',
@@ -72,6 +72,30 @@ function getAchievments(stats) {
 			target: function() {
 				return achievments.length;
 			}
+		}),
+		new Achievment(stats, {
+			id: 9,
+			material: 'gold',
+			title: 'Нетерпеливый',
+			description: '1,000 проверить свои достижения',
+			relation: 'popup',
+			target: 1000
+		}),
+		new Achievment(stats, {
+			id: 10,
+			material: 'gold',
+			title: 'Горящие кнопки',
+			description: 'Напечатать 200 символов в минуту',
+			relation: 'pressesSpeed',
+			target: 200
+		}),
+		new Achievment(stats, {
+			id: 11,
+			material: 'gold',
+			title: 'Мышка в ловушке',
+			description: '60 кликов мышкой в минуту',
+			relation: 'clicksSpeed',
+			target: 60
 		})
 	]
 

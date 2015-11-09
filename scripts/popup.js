@@ -14,7 +14,7 @@ function init(stats) {
 		b.isFired() ? fire ++ : '';
 		a.isRecent() ? fire -- : '';
 		b.isRecent() ? fire ++ : '';
-		return fire;
+		return (fire == 0) ? a.id - b.id : fire;
 	});
 
 	var patternResult = '';
@@ -47,7 +47,10 @@ chrome.storage.local.get({
 		pages: 0,
 		path: 0,
 		presses: 0,
+		pressesSpeed: 0,
 		clicks: 0,
+		clicksSpeed: 0,
+		popup: 0,
 		keys: {},
 		achievmentsFired: [],
 		achievmentsRecent: []

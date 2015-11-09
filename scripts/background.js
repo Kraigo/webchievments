@@ -1,3 +1,5 @@
+'use strict';
+
 var KEYS = {
 	'65': 'A',			'66': 'B',			'67': 'C',
 	'68': 'D',			'69': 'E',			'70': 'F',
@@ -24,10 +26,13 @@ var KEYS = {
 }
 var stats;
 var achievments;
+var stacks = {
+	presses: [],
+	clicks: []
+}
 
 function setListeners() {
 	chrome.runtime.onMessage.addListener(function(msg) {
-
 		if (msg.pages) {
 			stats.pages += msg.pages;
 		}
@@ -38,6 +43,13 @@ function setListeners() {
 		
 		if (msg.clicks) {
 			stats.clicks += msg.clicks;
+
+			var lastSpeed = calcSpeed(msg.clicks, stacks.clicks);
+			if (lastSpeed > stats.clicksSpeed) {
+				stats.clicksSpeed = lastSpeed;
+			}
+
+			console.log(msg.clicks);
 		}
 
 		if (msg.keys) {
@@ -48,15 +60,21 @@ function setListeners() {
 					stats.keys[KEYS[k]] = 0;
 				}
 				stats.keys[KEYS[k]] ++;
-				stats.presses ++;
+			}
+			stats.presses += msg.keys.length;
+
+			var lastSpeed = calcSpeed(msg.keys.length, stacks.presses);
+			if (lastSpeed > stats.pressesSpeed) {
+				stats.pressesSpeed = lastSpeed;
 			}
 		}
 
 		if (msg.openPopup) {
+			stats.popup ++;
 			stats.achievmentsRecent = stats.achievmentsRecent.filter(function(item){
 				return msg.openPopup.indexOf(item) < 0;
 			});
-			chrome.browserAction.setBadgeText({text: ''})
+			chrome.browserAction.setBadgeText({text: ''});
 		}
 
 	});
@@ -83,6 +101,17 @@ function checkAchievments() {
 	}
 }
 
+function calcSpeed(input, stack) {
+	stack.push(input);
+	if (stack.length > 5) {
+		stack.pop();
+	}
+	var result = 0;
+	for (var i = 0; i < stack.length; i ++) {
+		result += stack[i];
+	}
+	return result;
+}
 
 function fireAchievment(achievment) {
 	console.log('Fire achievment', achievment.title);
@@ -99,7 +128,10 @@ chrome.storage.local.get({
 		pages: 0,
 		path: 0,
 		presses: 0,
+		pressesSpeed: 0,
 		clicks: 0,
+		clicksSpeed: 0,
+		popup: 0,
 		keys: {},
 		achievmentsFired: [],
 		achievmentsRecent: []
