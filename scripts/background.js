@@ -24,15 +24,48 @@ var KEYS = {
 	'191': 'BSLASH',	'220': 'FSLASH',
 	'189': 'MINUS',		'187': 'PLUS'
 }
-var stats;
+
 var achievments;
-var stacks = {
-	presses: [],
-	clicks: []
+var stack = new Stack();
+var stats;
+
+var temp = {
+	clicks: 0,
+	presses: 0
 }
+
+// ## ## STACK ## ##
+
+function Stack() {
+	this.storage = {};
+}
+Stack.prototype.add = function(prop, value, maxlength) {
+		if (!this.storage[prop]) {
+			this.storage[prop] = [];
+		}
+
+		this.storage[prop].push(value);
+
+		maxlength = maxlength || 6;
+		if (this.storage[prop].length > maxlength) {
+			this.storage[prop].shift();
+		}		
+	};
+Stack.prototype.sum = function(prop) {
+		if (!this.storage[prop]) return null;
+
+		var result = 0;
+		for (var i = 0; i < this.storage[prop].length; i++) {
+			result += this.storage[prop][i];
+		}
+		return result;
+};
+
+
 
 function setListeners() {
 	chrome.runtime.onMessage.addListener(function(msg) {
+
 		if (msg.pages) {
 			stats.pages += msg.pages;
 		}
@@ -43,13 +76,7 @@ function setListeners() {
 		
 		if (msg.clicks) {
 			stats.clicks += msg.clicks;
-
-			var lastSpeed = calcSpeed(msg.clicks, stacks.clicks);
-			if (lastSpeed > stats.clicksSpeed) {
-				stats.clicksSpeed = lastSpeed;
-			}
-
-			console.log(msg.clicks);
+			temp.clicks += msg.clicks;
 		}
 
 		if (msg.keys) {
@@ -61,12 +88,8 @@ function setListeners() {
 				}
 				stats.keys[KEYS[k]] ++;
 			}
-			stats.presses += msg.keys.length;
-
-			var lastSpeed = calcSpeed(msg.keys.length, stacks.presses);
-			if (lastSpeed > stats.pressesSpeed) {
-				stats.pressesSpeed = lastSpeed;
-			}
+			stats.presses += msg.keys.length;			
+			temp.presses += msg.keys.length;
 		}
 
 		if (msg.openPopup) {
@@ -80,8 +103,29 @@ function setListeners() {
 	});
 }
 
+function checkStack() {
+
+	stack.add('clicks', temp.clicks);
+	temp.clicks = 0;
+
+	stack.add('presses', temp.presses);
+	temp.presses = 0;
+
+	var lastClicksSpeed = stack.sum('clicks');
+	var lastKeysSpeed = stack.sum('presses');
+
+	if (lastKeysSpeed > stats.pressesSpeed) {
+		stats.pressesSpeed = lastKeysSpeed;
+	}
+
+	if (lastClicksSpeed > stats.clicksSpeed) {
+		stats.clicksSpeed = lastClicksSpeed;
+	}
+}
+
 function saveStats() {
 	checkAchievments();
+	checkStack();
 	chrome.storage.local.set(stats);
 }
 
@@ -99,18 +143,6 @@ function checkAchievments() {
 			fireAchievment(achievment);
 		}
 	}
-}
-
-function calcSpeed(input, stack) {
-	stack.push(input);
-	if (stack.length > 5) {
-		stack.pop();
-	}
-	var result = 0;
-	for (var i = 0; i < stack.length; i ++) {
-		result += stack[i];
-	}
-	return result;
 }
 
 function fireAchievment(achievment) {
