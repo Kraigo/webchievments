@@ -98,14 +98,6 @@ function getAchievments(stats) {
 			target: 60
 		}),
 		new Achievment(stats, {
-			id: 12,
-			material: 'gold',
-			title: 'Скорость скролла',
-			description: 'скролла в минуту',
-			relation: 'scrollSpeed',
-			target: 1000000000000
-		}),
-		new Achievment(stats, {
 			id: 13,
 			material: 'gold',
 			title: 'Отправить в путешествие',
@@ -117,9 +109,9 @@ function getAchievments(stats) {
 			id: 14,
 			material: 'gold',
 			title: 'Дорожный бегун',
-			description: 'Крути колесо со скоростью 30,000 пикселей в минуту',
-			relation: 'wheelSpeed',
-			target: 1000000
+			description: 'Скроль со скоростью 30,000 пикселей в минуту',
+			relation: 'scrollSpeed',
+			target: 30000
 		}),
 		new Achievment(stats, {
 			id: 15,
@@ -137,7 +129,7 @@ function getAchievments(stats) {
 
 function Achievment(stats, options, trigger) {
 	this.stats = stats;	
-
+	
 	this.id = options.id;
 	this.material = options.material || 'regular';
 	this.icon = options.icon || 'icon-48.png';

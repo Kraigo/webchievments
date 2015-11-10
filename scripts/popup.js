@@ -1,10 +1,10 @@
 'use strict';
-function init(stats) {
-	var achievments = getAchievments(stats);
-	document.getElementById('achievmentFiredCount').innerHTML = stats.achievmentsFired.length;
+function init(options) {
+	var achievments = getAchievments(options.stats);
+	document.getElementById('achievmentFiredCount').innerHTML = options.stats.achievmentsFired.length;
 	document.getElementById('achievmentAllCount').innerHTML = achievments.length;
 
-	chrome.runtime.sendMessage(null, {popup: stats.achievmentsRecent});
+	chrome.runtime.sendMessage(null, {popup: options.stats.achievmentsRecent});
 
 	var listPattern = document.getElementById('achievment-tmp').innerHTML;
 
@@ -45,6 +45,7 @@ function getDPI() {
 
 
 chrome.storage.local.get({
+	stats: {
 		pages: 0,
 		path: 0,
 		presses: 0,
@@ -59,8 +60,9 @@ chrome.storage.local.get({
 		wheelPath: 0,
 		keys: {},
 		achievmentsFired: [],
-		achievmentsRecent: [],
-	}, init);
+		achievmentsRecent: []
+	}
+}, init);
 
 function fillPattern(pattern, data) {
 	for(var key in data) {

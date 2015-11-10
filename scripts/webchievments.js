@@ -28,7 +28,6 @@
 
 	setInterval(function() {
 		chrome.runtime.sendMessage(null, stats);
-
 		stats = resetStats();
 	}, 10000);
 
