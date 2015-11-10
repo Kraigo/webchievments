@@ -1,5 +1,6 @@
 (function(){
 	var stats = resetStats();
+	var scrollLastPosition = 0;
 
 	chrome.runtime.sendMessage(null, {pages: 1});
 
@@ -15,6 +16,12 @@
 		stats.clicks ++;
 	});
 
+	document.addEventListener('scroll', function(e) {
+		stats.scroll += Math.abs(window.pageYOffset - scrollLastPosition)
+		scrollLastPosition = window.pageYOffset;
+		console.log(stats.scroll);
+	});
+
 	setInterval(function() {
 		chrome.runtime.sendMessage(null, stats);
 
@@ -25,7 +32,8 @@
 		return {
 			path: 0,
 			keys: [],
-			clicks: 0
+			clicks: 0,
+			scroll: 0
 		};
 	}
 })();

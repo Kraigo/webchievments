@@ -31,8 +31,8 @@ function getAchievments(stats) {
 			id: 4,
 			material: 'gold',
 			title: 'От Земли до Луны',
-			description: '384,467 километров (145,300,715,840 пкс при 96 ppi)',
-			relation: 'path',
+			description: 'Проскролить 384,467 километров (145,300,715,840 пкс при 96 ppi)',
+			relation: 'scroll',
 			target: 145300715840
 		}),
 		new Achievment(stats, {

@@ -50,7 +50,8 @@ chrome.storage.local.get({
 		pressesSpeed: 0,
 		clicks: 0,
 		clicksSpeed: 0,
-		popup: 0,
+		popup: 0,		
+		scroll: 0,
 		keys: {},
 		achievmentsFired: [],
 		achievmentsRecent: []

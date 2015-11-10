@@ -100,6 +100,10 @@ function setListeners() {
 			chrome.browserAction.setBadgeText({text: ''});
 		}
 
+		if (msg.scroll) {
+			stats.scroll += msg.scroll;
+		}
+
 	});
 }
 
@@ -164,8 +168,9 @@ chrome.storage.local.get({
 		clicks: 0,
 		clicksSpeed: 0,
 		popup: 0,
+		scroll: 0,
 		keys: {},
 		achievmentsFired: [],
-		achievmentsRecent: []
+		achievmentsRecent: [],
 	}, init);
 });
