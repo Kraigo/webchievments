@@ -4,7 +4,7 @@
   "manifest_version": 2,
 
   "background": {
-    "scripts": ["scripts/achievments.js", "scripts/background.js"]
+    "scripts": ["scripts/achievments.js", "scripts/stats.js", "scripts/background.js"]
   },
 
   "description": "Стань самым крутым в нэте",

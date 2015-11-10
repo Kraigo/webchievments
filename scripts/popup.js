@@ -4,7 +4,7 @@ function init(stats) {
 	document.getElementById('achievmentFiredCount').innerHTML = stats.achievmentsFired.length;
 	document.getElementById('achievmentAllCount').innerHTML = achievments.length;
 
-	chrome.runtime.sendMessage(null, {openPopup: stats.achievmentsRecent});
+	chrome.runtime.sendMessage(null, {popup: stats.achievmentsRecent});
 
 	var listPattern = document.getElementById('achievment-tmp').innerHTML;
 
@@ -20,6 +20,7 @@ function init(stats) {
 	var patternResult = '';
 
 	achievments.forEach(function(achievment) {
+		console.log(achievment);
 		var patternData = {
 			title: achievment.title,
 			description: achievment.description,
@@ -50,7 +51,7 @@ chrome.storage.local.get({
 		pressesSpeed: 0,
 		clicks: 0,
 		clicksSpeed: 0,
-		popup: 0,		
+		popup: 0,
 		scroll: 0,
 		scrollSpeed: 0,
 		wheel: 0,
@@ -58,7 +59,7 @@ chrome.storage.local.get({
 		wheelPath: 0,
 		keys: {},
 		achievmentsFired: [],
-		achievmentsRecent: []
+		achievmentsRecent: [],
 	}, init);
 
 function fillPattern(pattern, data) {
