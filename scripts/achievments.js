@@ -96,6 +96,38 @@ function getAchievments(stats) {
 			description: '60 кликов мышкой в минуту',
 			relation: 'clicksSpeed',
 			target: 60
+		}),
+		new Achievment(stats, {
+			id: 12,
+			material: 'gold',
+			title: 'Скорость скролла',
+			description: 'скролла в минуту',
+			relation: 'scrollSpeed',
+			target: 1000000000000
+		}),
+		new Achievment(stats, {
+			id: 13,
+			material: 'gold',
+			title: 'Отправить в путешествие',
+			description: 'Прокрутить 1,000,000 пикселе колёсиком',
+			relation: 'wheelPath',
+			target: 1000000
+		}),
+		new Achievment(stats, {
+			id: 14,
+			material: 'gold',
+			title: 'Дорожный бегун',
+			description: 'Крути колесо со скоростью 30,000 пикселей в минуту',
+			relation: 'wheelSpeed',
+			target: 1000000
+		}),
+		new Achievment(stats, {
+			id: 15,
+			material: 'gold',
+			title: 'Крутой крутун',
+			description: 'Крути колесо со скоростью 300 щелчков в минуту',
+			relation: 'wheel',
+			target: 300
 		})
 	]
 

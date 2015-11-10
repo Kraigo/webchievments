@@ -19,7 +19,11 @@
 	document.addEventListener('scroll', function(e) {
 		stats.scroll += Math.abs(window.pageYOffset - scrollLastPosition)
 		scrollLastPosition = window.pageYOffset;
-		console.log(stats.scroll);
+	});
+
+	document.addEventListener('wheel', function(e) {
+		stats.wheel ++;
+		stats.wheelPath += Math.abs(e.deltaY);
 	});
 
 	setInterval(function() {
@@ -33,7 +37,9 @@
 			path: 0,
 			keys: [],
 			clicks: 0,
-			scroll: 0
+			scroll: 0,
+			wheel: 0,
+			wheelPath: 0
 		};
 	}
 })();

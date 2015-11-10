@@ -31,7 +31,9 @@ var stats;
 
 var temp = {
 	clicks: 0,
-	presses: 0
+	presses: 0,
+	scroll: 0,
+	wheel: 0
 }
 
 // ## ## STACK ## ##
@@ -102,6 +104,16 @@ function setListeners() {
 
 		if (msg.scroll) {
 			stats.scroll += msg.scroll;
+			temp.scroll += msg.scroll;
+		}
+
+		if (msg.wheel) {
+			stats.wheel += msg.wheel;
+			temp.wheel += msg.wheel;
+		}
+
+		if (msg.wheelPath) {
+			stats.wheelPath += msg.wheelPath;
 		}
 
 	});
@@ -115,8 +127,16 @@ function checkStack() {
 	stack.add('presses', temp.presses);
 	temp.presses = 0;
 
+	stack.add('scroll', temp.scroll);
+	temp.scroll = 0;
+
+	stack.add('wheel', temp.wheel);
+	temp.wheel = 0;
+
 	var lastClicksSpeed = stack.sum('clicks');
 	var lastKeysSpeed = stack.sum('presses');
+	var lastScrollSpeed = stack.sum('scroll');
+	var lastWheelSpeed = stack.sum('wheel');
 
 	if (lastKeysSpeed > stats.pressesSpeed) {
 		stats.pressesSpeed = lastKeysSpeed;
@@ -124,6 +144,14 @@ function checkStack() {
 
 	if (lastClicksSpeed > stats.clicksSpeed) {
 		stats.clicksSpeed = lastClicksSpeed;
+	}
+
+	if (lastScrollSpeed > stats.scrollSpeed) {
+		stats.scrollSpeed = lastScrollSpeed;
+	}
+
+	if (lastWheelSpeed > stats.wheelSpeed) {
+		stats.wheelSpeed = lastWheelSpeed;
 	}
 }
 
@@ -169,6 +197,10 @@ chrome.storage.local.get({
 		clicksSpeed: 0,
 		popup: 0,
 		scroll: 0,
+		scrollSpeed: 0,
+		wheel: 0,
+		wheelSpeed: 0,
+		wheelPath: 0,
 		keys: {},
 		achievmentsFired: [],
 		achievmentsRecent: [],
