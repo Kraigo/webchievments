@@ -30,6 +30,7 @@ function init(options) {
 			progress: achievment.progress(),
 			fire: achievment.isFired()? 'fired' : '',
 			recent: achievment.isRecent()? 'recent' : '',
+			material: achievment.material
 		};
 		patternResult += fillPattern(listPattern, patternData);
 	});

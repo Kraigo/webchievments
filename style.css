@@ -98,7 +98,7 @@ html, body {
 	top: 0;
 	left: 0;
 	height: 100%;
-	background: linear-gradient(135deg, #aaa 0%, #aaa 30%, #fff 30%, #fff 50%, #aaa 50%, #aaa 80%, #fff 80%, #fff 100%);
+	background-image: linear-gradient(135deg, #aaa 0%, #aaa 30%, #fff 30%, #fff 50%, #aaa 50%, #aaa 80%, #fff 80%, #fff 100%);
 	background-size: 10px 10px;
 }
 
@@ -125,9 +125,83 @@ html, body {
 	background-color: #FFF5CB;
 }
 .achievment.fired.recent .achievment-progress-bar {
-    background: linear-gradient(135deg, #D6AF13 0%, #D6AF13 30%, #fff 30%, #fff 50%, #D6AF13 50%, #D6AF13 80%, #fff 80%, #fff 100%);
-    background-size: 10px 10px;
+	background-image: linear-gradient(135deg, #D6AF13 0%, #D6AF13 30%, #fff 30%, #fff 50%, #D6AF13 50%, #D6AF13 80%, #fff 80%, #fff 100%);
+	background-size: 10px 10px;
 }
+/* Material :: Bronze */
+.achievment.fired.recent.bronze {
+	border-color: #AE837D;
+}
+.achievment.fired.recent.bronze .achievment-image {
+	background-color: #AE837D;
+}
+.achievment.fired.recent.bronze .achievment-progress-bar {
+	background-image: linear-gradient(135deg, #AE837D 0%, #AE837D 30%, #fff 30%, #fff 50%, #AE837D 50%, #AE837D 80%, #fff 80%, #fff 100%);
+}
+.achievment.fired.recent.bronze:before{
+	background-image: linear-gradient(135deg,
+		transparent 0%,
+		transparent 20%,
+		rgba(174, 131, 125, 0.5) 20%,
+		rgba(174, 131, 125, 0.5) 30%,
+		rgba(255, 255, 255, 0.4) 30%,
+		rgba(255, 255, 255, 0.4) 35%,
+		rgba(174, 131, 125, 0.5) 35%,
+		rgba(174, 131, 125, 0.5) 60%,
+		transparent 60%,
+		transparent 100%);
+}
+
+/* Material :: Silver */
+.achievment.fired.recent.silver {
+	border-color: #C7D2D8;
+}
+.achievment.fired.recent.silver .achievment-image {
+	background-color: #C7D2D8;
+}
+.achievment.fired.recent.silver .achievment-progress-bar {
+	background-image: linear-gradient(135deg, #C7D2D8 0%, #C7D2D8 30%, #fff 30%, #fff 50%, #C7D2D8 50%, #C7D2D8 80%, #fff 80%, #fff 100%);
+}
+.achievment.fired.recent.silver:before{
+	background-image: linear-gradient(135deg,
+		transparent 0%,
+		transparent 20%,
+		rgba(199, 210, 216, 0.5) 20%,
+		rgba(199, 210, 216, 0.5) 30%,
+		rgba(255, 255, 255, 0.4) 30%,
+		rgba(255, 255, 255, 0.4) 35%,
+		rgba(199, 210, 216, 0.5) 35%,
+		rgba(199, 210, 216, 0.5) 60%,
+		transparent 60%,
+		transparent 100%);
+}
+
+/* Material :: Gold */
+.achievment.fired.recent.gold {
+	border-color: #E6BE20;
+}
+.achievment.fired.recent.gold .achievment-image {
+	background-color: #E6BE20;
+}
+.achievment.fired.recent.gold .achievment-progress-bar {
+	background-image: linear-gradient(135deg, #E6BE20 0%, #E6BE20 30%, #fff 30%, #fff 50%, #E6BE20 50%, #E6BE20 80%, #fff 80%, #fff 100%);
+}
+.achievment.fired.recent.gold:before{
+	background-image: linear-gradient(135deg,
+		transparent 0%,
+		transparent 20%,
+		rgba(230, 190, 32, 0.5) 20%,
+		rgba(230, 190, 32, 0.5) 30%,
+		rgba(255, 255, 255, 0.4) 30%,
+		rgba(255, 255, 255, 0.4) 35%,
+		rgba(230, 190, 32, 0.5) 35%,
+		rgba(230, 190, 32, 0.5) 60%,
+		transparent 60%,
+		transparent 100%);
+}
+
+
+
 
 .recent:before {
 	content: '';
@@ -136,8 +210,8 @@ html, body {
 	left: 0;
 	top:0;
 	position: absolute;
-    z-index: 2;
-	background: linear-gradient(135deg,
+	z-index: 2;
+	background-image: linear-gradient(135deg,
 		transparent 0%,
 		transparent 20%,
 		rgba(243, 204, 51, 0.5) 20%,
@@ -151,8 +225,8 @@ html, body {
 	background-size: 200px 100px;
 	background-repeat: no-repeat;
 	background-position: -200% 0;
-	-webkit-animation: blink 2s ease;
-	animation: blink 1s ease;
+	-webkit-animation: blink 2s ease infinite;
+	animation: blink 1s ease infinite;
 }
 
 @keyframes blink {
