@@ -225,8 +225,8 @@ html, body {
 	background-size: 200px 100px;
 	background-repeat: no-repeat;
 	background-position: -200% 0;
-	-webkit-animation: blink 2s ease infinite;
-	animation: blink 1s ease infinite;
+	-webkit-animation: blink 1s ease;
+	animation: blink 1s ease;
 }
 
 @keyframes blink {

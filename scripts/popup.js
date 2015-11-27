@@ -48,6 +48,7 @@ function getDPI() {
 chrome.storage.local.get({
 	stats: {
 		pages: 0,
+		pagesSpeed: 0,
 		path: 0,
 		presses: 0,
 		pressesSpeed: 0,

@@ -25,7 +25,7 @@ function Stats() {
 	this.achievments = getAchievments(this.stats);
 
 	this.setListeners();
-	// chrome.storage.local.clear();
+	chrome.storage.local.clear();
 	this.loadStats();
 
 	setInterval(function() {
