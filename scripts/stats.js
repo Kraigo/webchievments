@@ -4,6 +4,7 @@ function Stats() {
 	var self = this;
 	this.stats = {
 			pages: 0,
+			pagesSpeed: 0,
 			path: 0,
 			presses: 0,
 			pressesSpeed: 0,
@@ -24,7 +25,7 @@ function Stats() {
 	this.achievments = getAchievments(this.stats);
 
 	this.setListeners();
-	chrome.storage.local.clear();
+	// chrome.storage.local.clear();
 	this.loadStats();
 
 	setInterval(function() {
@@ -80,10 +81,15 @@ Stats.prototype = {
 		this.tempClear();
 	},
 	checkStack: function () {
+		var lastPagesSpeed = this.sumStat('pages');
 		var lastClicksSpeed = this.sumStat('clicks');
 		var lastPressesSpeed = this.sumStat('presses');
 		var lastScrollSpeed = this.sumStat('scroll');
 		var lastWheelSpeed = this.sumStat('wheel');
+
+		if (lastPagesSpeed > this.stats.pagesSpeed) {
+			this.stats.pagesSpeed = lastPagesSpeed;
+		}
 
 		if (lastPressesSpeed > this.stats.pressesSpeed) {
 			this.stats.pressesSpeed = lastPressesSpeed;
